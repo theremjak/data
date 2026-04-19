@@ -1,0 +1,6 @@
+# Bitcoin daily update + forecast charts
+yfinance==0.2.61
+plotly==6.2.0
+pandas==2.2.3
+numpy==2.2.6
+requests==2.32.3
