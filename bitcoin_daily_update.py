@@ -259,7 +259,7 @@ fc_fig.update_layout(
     **DARK,
     xaxis=dict(title="Date", gridcolor="#21262d", showgrid=True,
                hoverformat="%b %d, %Y",
-               range=["2024-01-01", str(forecast_dates[-1].date())]),
+               range=["2025-01-01", str(forecast_dates[-1].date())]),
     yaxis=dict(title="Price (USD)", type="log", gridcolor="#21262d", showgrid=True,
                tickformat="$,.0f", hoverformat="$,.0f"),
     legend=dict(bgcolor="#161b22", bordercolor="#30363d", borderwidth=1,
