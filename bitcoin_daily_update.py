@@ -101,8 +101,10 @@ print(f"  Latest: ${latest_price:,.0f}  ({latest_date.date()})")
 # ── 3. Append new rows to daily CSV ──────────────────────────────────────────
 daily_csv = "bitcoin_daily_prices.csv"
 try:
-    existing  = pd.read_csv(daily_csv, parse_dates=["date"])
+    existing = pd.read_csv(daily_csv)
+    existing["date"] = pd.to_datetime(existing["date"])
     last_saved = existing["date"].max()
+    print(f"  CSV loaded: {len(existing)} rows, last_saved={last_saved.date()}")
 except FileNotFoundError:
     existing   = pd.DataFrame(columns=["date", "close"])
     last_saved = pd.Timestamp("2000-01-01")
