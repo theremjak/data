@@ -5,6 +5,9 @@ on:
     - cron: "30 21 * * *"   # 9:30 PM UTC = ~4:30 PM ET (after US market close)
   workflow_dispatch:         # allows manual trigger from GitHub Actions UI
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   update:
     runs-on: ubuntu-latest

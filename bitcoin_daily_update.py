@@ -259,8 +259,8 @@ fc_fig.update_layout(
     **DARK,
     xaxis=dict(title="Date", gridcolor="#21262d", showgrid=True,
                hoverformat="%b %d, %Y",
-               range=["2025-01-01", str(forecast_dates[-1].date())]),
-    yaxis=dict(title="Price (USD)", type="log", gridcolor="#21262d", showgrid=True,
+               range=["2025-06-30", str(forecast_dates[-1].date())]),
+    yaxis=dict(title="Price (USD)", gridcolor="#21262d", showgrid=True,
                tickformat="$,.0f", hoverformat="$,.0f"),
     legend=dict(bgcolor="#161b22", bordercolor="#30363d", borderwidth=1,
                 x=0.01, y=0.99, xanchor="left", yanchor="top"),
@@ -277,8 +277,10 @@ print("  → bitcoin_lstm_forecast.html")
 # ── 6. Refresh bitcoin_power_law_model.html ───────────────────────────────────
 print("Refreshing power law chart...")
 
-end_proj   = date(2035, 1, 1)
-pl_halvings = [(d, f"Halving {i+1}") for i, d in enumerate(HALVING_DATES) if d < end_proj]
+end_proj    = date(2035, 1, 1)
+chart_start = raw.index[0].date()
+pl_halvings = [(d, f"Halving {i+1}") for i, d in enumerate(HALVING_DATES)
+               if chart_start <= d < end_proj]
 proj_days  = np.linspace(
     days_since_genesis(raw.index[0].date()),
     days_since_genesis(end_proj),
@@ -345,7 +347,8 @@ pl_fig.update_layout(
                font=dict(size=18)),
     **DARK,
     xaxis=dict(title="Date", gridcolor="#21262d", showgrid=True,
-               hoverformat="%b %d, %Y"),
+               hoverformat="%b %d, %Y",
+               range=[str(chart_start), str(end_proj)]),
     yaxis=dict(title="Price (USD)", type="log", gridcolor="#21262d", showgrid=True,
                tickformat="$,.0f", hoverformat="$,.0f"),
     legend=dict(bgcolor="#161b22", bordercolor="#30363d", borderwidth=1,
