@@ -29,7 +29,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run daily update
-        run: python bitcoin_daily_update.py
+        run: python -u bitcoin_daily_update.py
 
       - name: Commit updated charts
         run: |
