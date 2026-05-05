@@ -357,8 +357,10 @@ pl_fig.update_layout(
 pl_fig.write_html("bitcoin_power_law_model.html")
 print("  → bitcoin_power_law_model.html")
 
-subprocess.Popen(["open", "bitcoin_lstm_forecast.html"])
-subprocess.Popen(["open", "bitcoin_power_law_model.html"])
+import platform
+if platform.system() == "Darwin":
+    subprocess.Popen(["open", "bitcoin_lstm_forecast.html"])
+    subprocess.Popen(["open", "bitcoin_power_law_model.html"])
 
 print(f"\nDone.  Latest BTC: ${latest_price:,.0f}  |  Zone: {zone}  |  "
       f"{days_remaining}d left in forecast window")
