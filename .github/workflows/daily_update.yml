@@ -1,0 +1,40 @@
+name: Bitcoin Daily Update
+
+on:
+  schedule:
+    - cron: "30 21 * * *"   # 9:30 PM UTC = ~4:30 PM ET (after US market close)
+  workflow_dispatch:         # allows manual trigger from GitHub Actions UI
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write        # needed to commit updated HTML files back to repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily update
+        run: python bitcoin_daily_update.py
+
+      - name: Commit updated charts
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add bitcoin_lstm_forecast.html \
+                  bitcoin_power_law_model.html \
+                  bitcoin_lstm_forecast_data.csv \
+                  bitcoin_daily_prices.csv
+          git diff --cached --quiet || git commit -m "chore: daily BTC update $(date -u +%Y-%m-%d)"
+          git push
